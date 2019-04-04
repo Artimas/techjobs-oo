@@ -1,5 +1,6 @@
 package org.launchcode.controllers;
 
+import org.launchcode.models.Employer;
 import org.launchcode.models.Job;
 import org.launchcode.models.data.JobFieldData;
 import org.launchcode.models.forms.JobForm;
@@ -50,6 +51,7 @@ public class JobController {
             model.addAttribute(new JobForm());
             return "new-job";
         }
+
         Job job = new Job(jobForm.getName(),
                 JobFieldData.findById(jobForm.getEmployerId()),
                 JobFieldData.findById(jobForm.getLocationId()),
