@@ -44,22 +44,23 @@ public class JobController {
     public String add(Model model, @Valid JobForm jobForm, Errors errors) {
 
 
-        // TODO #6 - Validate the JobForm model, and if valid, create a
-        // new Job and add it to the jobData data store. Then
-        // redirect to the job detail view for the new Job.
+        /* TODO: make the errors return with the new-job template if there are any*/
+
+        Job job = new Job(jobForm.getName(),
+                jobData.getEmployers().findById(jobForm.getEmployerId()),
+                jobData.getLocations().findById(jobForm.getLocationId()),
+                jobData.getPositionTypes().findById(jobForm.getPositionTypeId()),
+                jobData.getCoreCompetencies().findById(jobForm.getCoreCompetencyId()));
+
         if (errors.hasErrors()){
             model.addAttribute(new JobForm());
+            model.addAttribute(job);
             return "new-job";
         }
 
-        Job job = new Job(jobForm.getName(),
-                JobFieldData.findById(jobForm.getEmployerId()),
-                JobFieldData.findById(jobForm.getLocationId()),
-                JobFieldData.findById(jobForm.getPositionTypeId()),
-                JobFieldData.findById(jobForm.getCoreCompetencyId()));
         jobData.add(job);
 
-        return "";
+        return "redirect:/job/" + job.getId();
 
     }
 }
