@@ -43,9 +43,6 @@ public class JobController {
     @RequestMapping(value = "add", method = RequestMethod.POST)
     public String add(Model model, @Valid JobForm jobForm, Errors errors) {
 
-
-        /* TODO: make the errors return with the new-job template if there are any*/
-
         Job job = new Job(jobForm.getName(),
                 jobData.getEmployers().findById(jobForm.getEmployerId()),
                 jobData.getLocations().findById(jobForm.getLocationId()),
@@ -53,7 +50,7 @@ public class JobController {
                 jobData.getCoreCompetencies().findById(jobForm.getCoreCompetencyId()));
 
         if (errors.hasErrors()){
-            model.addAttribute(new JobForm());
+            model.addAttribute("JobForm", jobForm);
             model.addAttribute(job);
             return "new-job";
         }
